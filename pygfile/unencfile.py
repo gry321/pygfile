@@ -27,11 +27,11 @@ def main():
         s = base64.b85decode(s)
         print("文件内容："+s.decode())
 
-        if eg.boolbox("是否保存文件？",choices=("保存","不保存")):
+        if eg.boolbox("是否保存文件？（克隆文件）",choices=("保存","不保存")):
             d = eg.diropenbox("请选择路径")
             os.chdir(d)
-            with open(file_info[0].decode(),"w") as f:
-                f.write(s)
+            with open(file_info[0].decode().strip("\x00"),"w") as f:
+                f.write(s.decode())
             eg.msgbox(title="提示",msg="OK")
 
 if __name__ == "__main__":
