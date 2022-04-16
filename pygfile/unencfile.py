@@ -11,7 +11,7 @@ class MaliciousCodeError(Exception):
 def main():
     n = eg.enterbox("请输入加密的数据， b' 和 ' 也要带")
     if n != "" or n != None:
-        if n[0] == "b" and n[1] == "'" and n[-1] == "'":
+        if (n[0] == "b" and n[1] == "'" and n[-1] == "'") or (n[0] == "b" and n[1] == '"' and n[-1] == '"'):
             n = eval(n) #如果直接eval，有可能是恶意代码
         else:
             raise MaliciousCodeError()

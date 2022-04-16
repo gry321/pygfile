@@ -7,7 +7,7 @@ import os
 
 
 def main():
-    file = eg.fileopenbox("请选择加密的文件，不是二进制文件")
+    file = eg.fileopenbox("请选择加密的文件")
     if file!=None:
         try:
             nums = int(eg.enterbox("请输入加密次数，默认是：1"))
@@ -24,8 +24,12 @@ def main():
         enc = struct.pack("128sl",name.encode(),size)
         r.append(enc)
 
-        enc = base64.b85encode(i.encode())
-        r.append(enc)
+        try:
+            enc = base64.b85encode(i.encode())
+            r.append(enc)
+        except Exception:
+            enc = base64.b85encode(i)
+            r.append(enc)
 
         enc_over = r
         for x in range(nums):

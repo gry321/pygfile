@@ -16,7 +16,7 @@ def dump(filename,string,stripln=True,enc_nums=1):
     for x in range(enc_nums):
         enc_over = pickle.dumps(enc_over)
     return enc_over
-def load(data,saveto=None,enc_nums=1):
+def load(data,enc_nums=1):
     if type(data) != bytes:
         raise NotBytesTypeError()
     r = data

@@ -5,7 +5,7 @@ with open("README.md", "r", encoding='utf-8') as fh:
     long_description = fh.read()
 
 setup(name='pygfile',  # 包名 别人安装时就是用此名来按照 如：pip install pyutilitytool
-      version='0.0.3',  # 包的版本号
+      version='0.0.4',  # 包的版本号
       description='Python加密文件。',  # 包的介绍、概述
       author='郭若垚',  # 包的作者
       author_email='yao1127@aliyun.com',  # 邮箱
