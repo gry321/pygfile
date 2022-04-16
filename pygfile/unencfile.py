@@ -15,8 +15,14 @@ def main():
             n = eval(n) #如果直接eval，有可能是恶意代码
         else:
             raise MaliciousCodeError()
+        try:
+            nums = int(eg.enterbox("请输入加密次数"))
+        except Exception:
+            return
         #解密开始
-        data = pickle.loads(n)
+        data = n
+        for x in range(nums):
+            data = pickle.loads(data)
 
         file_info = data[0]
         file_info = struct.unpack("128sl",file_info)

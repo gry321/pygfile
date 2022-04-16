@@ -1,6 +1,7 @@
 README.md
 setup.py
 pygfile/__init__.py
+pygfile/enc.py
 pygfile/encfile.py
 pygfile/unencfile.py
 pygfile.egg-info/PKG-INFO
