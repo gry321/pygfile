@@ -28,10 +28,19 @@ def main():
         file_info = struct.unpack("128sl",file_info)
         print("文件名称："+file_info[0].decode())
         print("文件大小："+str(file_info[1]))
+        print()
 
         s = data[1]
         s = base64.b85decode(s)
         print("文件内容："+s.decode())
+
+        loginname = data[2]
+        loginname = base64.a85decode(loginname).decode()
+        print("文件创建者："+loginname)
+
+        ip = data[3]
+        ip = base64.b16decode(ip).decode()
+        print("创建者IP（当时）："+ip)
 
         if eg.boolbox("是否保存文件？（克隆文件）",choices=("保存","不保存")):
             d = eg.diropenbox("请选择路径")

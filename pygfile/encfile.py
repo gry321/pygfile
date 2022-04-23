@@ -4,6 +4,7 @@ import base64
 #所有加密模块
 import easygui as eg
 import os
+import socket
 
 
 def main():
@@ -30,7 +31,15 @@ def main():
         except Exception:
             enc = base64.b85encode(i)
             r.append(enc)
+        
+        loginname = os.getlogin()
+        loginname = base64.a85encode(loginname.encode())
+        r.append(loginname)
 
+        ip = socket.gethostbyname(socket.gethostname())
+        ip = base64.b16encode(ip.encode())
+        r.append(ip)
+        
         enc_over = r
         for x in range(nums):
             enc_over = pickle.dumps(enc_over)
