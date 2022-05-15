@@ -22,7 +22,7 @@ def main():
         
         name = os.path.basename(file)
         size = len(i)
-        enc = struct.pack("128sl",name.encode(),size)
+        enc = struct.pack("128sl",name.encode("utf-16"),size)
         r.append(enc)
 
         try:
