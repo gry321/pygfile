@@ -3,13 +3,15 @@ import base64
 import struct
 import os
 import socket
+import binascii
+import zlib
 
 
 class NotBytesTypeError(Exception):
     pass
 
 
-def dump(filename, string, stripln=True, enc_nums=1):
+def dump(filename, string, stripln=True, enc_nums=1) -> bytes:
     # 代码有个好处，可以伪装
     data = []
     file_info = struct.pack("128sl", filename.encode(
@@ -29,13 +31,19 @@ def dump(filename, string, stripln=True, enc_nums=1):
     enc_over = data
     for x in range(enc_nums):
         enc_over = pickle.dumps(enc_over)
+    enc_over = zlib.compress(enc_over)
+    enc_over = "10" + binascii.hexlify(enc_over).decode() + "10"
+    enc_over = enc_over.encode()
     return enc_over
 
 
-def load(data, enc_nums=1):
+def load(data, enc_nums=1) -> list:
     if type(data) != bytes:
         raise NotBytesTypeError()
-    r = data
+    r = data.decode()
+    r = r.lstrip("10")
+    r = r.rstrip("10")
+    r = binascii.unhexlify(r)
     for x in range(enc_nums):
         r = pickle.loads(r)
     file_info = struct.unpack("128sl", r[0])

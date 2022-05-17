@@ -1,1 +1,1 @@
-from . import encfile as encfile
+from . import enc as enc

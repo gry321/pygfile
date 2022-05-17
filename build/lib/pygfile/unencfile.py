@@ -1,10 +1,12 @@
 import base64
+import os
 import pickle
 import struct
-from unittest import result
+import zlib
+import binascii
+
 # 解密
 import easygui as eg
-import os
 
 
 class MaliciousCodeError(Exception):
@@ -23,7 +25,9 @@ def main():
         except Exception:
             return
         # 解密开始
-        data = n
+        data = n.decode().lstrip("10").rstrip("10")
+        data = binascii.unhexlify(data)
+        data = zlib.decompress(data)
         for x in range(nums):
             data = pickle.loads(data)
 
@@ -48,17 +52,19 @@ def main():
         result = eg.buttonbox("是否保存文件？（克隆文件）", choices=("保存", "不保存", "保存并打开"))
         if result == "保存":
             d = eg.diropenbox("请选择路径")
-            os.chdir(d)
-            with open(file_info[0].decode().strip("\x00"), "w") as f:
-                f.write(s.decode())
-            eg.msgbox(title="提示", msg="OK")
+            if d != None:
+                os.chdir(d)
+                with open(file_info[0].decode().strip("\x00"), "w") as f:
+                    f.write(s.decode())
+                eg.msgbox(title="提示", msg="OK")
         elif result == "保存并打开":
             d = eg.diropenbox("请选择路径")
-            os.chdir(d)
-            with open(file_info[0].decode().strip("\x00"), "w") as f:
-                f.write(s.decode())
-            os.startfile(file_info[0].decode().strip("\x00"))
-            eg.msgbox(title="提示", msg="OK")
+            if d != None:
+                os.chdir(d)
+                with open(file_info[0].decode().strip("\x00"), "w") as f:
+                    f.write(s.decode())
+                os.startfile(file_info[0].decode().strip("\x00"))
+                eg.msgbox(title="提示", msg="OK")
 
 
 if __name__ == "__main__":
